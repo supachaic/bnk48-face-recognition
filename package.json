@@ -1,11 +1,16 @@
 {
-  "name": "faceapi",
+  "name": "bnk48-face-recognition",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "dependencies": {
+    "face-api.js": "^0.16.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-scripts": "2.1.1"
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.1",
+    "react-webcam": "^1.0.4",
+    "tslib": "^1.9.3"
   },
   "scripts": {
     "start": "react-scripts start",
