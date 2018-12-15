@@ -1,6 +1,6 @@
 import * as faceapi from 'face-api.js';
 
-const MODEL_URL = '/models';
+const MODEL_URL = '../models';
 const useTinyModel = true;
 const OPTION = new faceapi.TinyFaceDetectorOptions();
 const maxDescriptorDistance = 0.5;
