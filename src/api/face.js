@@ -1,11 +1,12 @@
 import * as faceapi from 'face-api.js';
 
-const MODEL_URL = '../models';
+const MODEL_URL = 'https://supachaic.github.io/bnk48-face-recognition/models';
 const useTinyModel = true;
 
 const maxDescriptorDistance = 0.5;
 
 async function loadModels() {
+  console.log(MODEL_URL);
   await faceapi.loadTinyFaceDetectorModel(MODEL_URL);
   await faceapi.loadFaceLandmarkTinyModel(MODEL_URL);
   await faceapi.loadFaceRecognitionModel(MODEL_URL);
