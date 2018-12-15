@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route, HashRouter as Router } from 'react-router-dom';
 import FaceRecognition from './components/faceRecognition';
 import CameraFaceDetect from './components/cameraFaceDetect';
 import Header from './components/Header';
@@ -9,9 +9,6 @@ import './App.css';
 //var hist = createBrowserHistory();
 
 class App extends Component {
-  componentWillMount() {
-    console.log(process.env.PUBLIC_URL);
-  }
   render() {
     return (
       <div className="App">
