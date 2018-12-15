@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "bnk48-face-recognition/precache-manifest.f3de835b8b995f9d446793a38eb7e636.js"
+  "/bnk48-face-recognition/precache-manifest.9f636d7bafcba8ac3629647c34475a39.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("bnk48-face-recognition/index.html", {
+workbox.routing.registerNavigationRoute("/bnk48-face-recognition/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
