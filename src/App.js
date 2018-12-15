@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, HashRouter as Router } from 'react-router-dom';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import FaceRecognition from './components/faceRecognition';
 import CameraFaceDetect from './components/cameraFaceDetect';
 import Header from './components/Header';

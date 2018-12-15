@@ -7,6 +7,7 @@ const maxDescriptorDistance = 0.5;
 
 async function loadModels() {
   console.log(MODEL_URL);
+  console.log(process.env.PUBLIC_URL);
   await faceapi.loadTinyFaceDetectorModel(MODEL_URL);
   await faceapi.loadFaceLandmarkTinyModel(MODEL_URL);
   await faceapi.loadFaceRecognitionModel(MODEL_URL);
