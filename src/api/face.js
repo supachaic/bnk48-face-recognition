@@ -2,7 +2,7 @@ import * as faceapi from 'face-api.js';
 
 const MODEL_URL = '../models';
 const useTinyModel = true;
-const OPTION = new faceapi.TinyFaceDetectorOptions();
+
 const maxDescriptorDistance = 0.5;
 
 async function loadModels() {
@@ -12,6 +12,7 @@ async function loadModels() {
 }
 
 loadModels();
+const OPTION = new faceapi.TinyFaceDetectorOptions(MODEL_URL);
 
 export async function getFullFaceDescription(blob) {
   // fetch image to api
