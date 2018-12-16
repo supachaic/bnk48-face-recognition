@@ -15,8 +15,8 @@ class App extends Component {
         <Router basename={process.env.PUBLIC_URL}>
           <div className="route">
             <Header />
-            {/* <Route exact path="/" component={FaceRecognition} /> */}
-            <Route
+            <Route exact path="/" component={FaceRecognition} />
+            {/* <Route
               exact
               path="/"
               render={routerProps => (
@@ -29,8 +29,8 @@ class App extends Component {
               render={routerProps => (
                 <FaceRecognition routerProps={routerProps} />
               )}
-            />
-            {/* <Route exact path="/photo" component={FaceRecognition} /> */}
+            /> */}
+            <Route exact path="/photo" component={FaceRecognition} />
             <Route exact path="/camera-front" component={CameraFaceDetect} />
             <Route exact path="/camera-back" component={CameraFaceDetect} />
           </div>
