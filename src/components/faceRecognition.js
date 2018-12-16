@@ -14,6 +14,7 @@ class FaceRecognition extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      url: null,
       imageURL: null,
       fullDesc: null,
       faceMatcher: null,
@@ -42,8 +43,12 @@ class FaceRecognition extends Component {
     this.handleImageChange();
   };
 
-  handleURLChange = async event => {
-    let blob = await fetch(event.target.value).then(r => r.blob());
+  handleURLChange = event => {
+    this.setState({ url: event.target.value });
+  };
+
+  handleButtonClick = async () => {
+    let blob = await fetch(this.state.url).then(r => r.blob());
     if (blob.type.includes('image')) {
       this.setState({
         imageURL: URL.createObjectURL(blob)
@@ -135,15 +140,19 @@ class FaceRecognition extends Component {
             accept=".jpg, .jpeg, .png"
           />
           <br />
-          <input
-            type="url"
-            name="url"
-            id="url"
-            placeholder="Place your photo URL here (only .jpg, .jpeg, .png)"
-            pattern="https://.*"
-            size="50"
-            onChange={this.handleURLChange}
-          />
+          <div className="URLInput">
+            <input
+              type="url"
+              name="url"
+              id="url"
+              placeholder="Place your photo URL here (only .jpg, .jpeg, .png)"
+              pattern="https://.*"
+              size="50"
+              onChange={this.handleURLChange}
+            />
+            <button onClick={this.handleButtonClick}>Upload</button>
+          </div>
+
           <div>
             <input
               name="descriptors"
