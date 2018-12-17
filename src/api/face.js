@@ -55,6 +55,5 @@ export async function createMatcher(faceProfile) {
 }
 
 export function isFaceDetectionModelLoaded() {
-  let result = faceapi.nets.tinyFaceDetector.params;
-  return result;
+  return !!faceapi.nets.tinyFaceDetector.params;
 }

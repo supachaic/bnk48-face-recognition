@@ -5,13 +5,16 @@ class Header extends Component {
   render() {
     return (
       <header>
-        <Link to="/photo">Photo </Link>
-        <Link to={{ pathname: '/camera-front', state: 'front' }}>
-          Front Camera{' '}
-        </Link>
-        <Link to={{ pathname: '/camera-back', state: 'back' }}>
-          Back Camera{' '}
-        </Link>
+        <div className="Navbar">
+          <Link to="/">Home</Link>
+          <Link to="/photo">Photo Input</Link>
+          <Link to={{ pathname: '/camera-front', state: 'front' }}>
+            Video Camera
+          </Link>
+          {/* <Link to={{ pathname: '/camera-back', state: 'back' }}>
+            Back Camera
+          </Link> */}
+        </div>
       </header>
     );
   }

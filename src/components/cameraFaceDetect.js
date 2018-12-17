@@ -15,16 +15,31 @@ class CameraFaceDetect extends Component {
     this.state = {
       fullDesc: null,
       faceMatcher: null,
-      facingMode: 'user'
+      facingMode: 'user',
+      inputDeviceVideo: null
     };
   }
 
   componentWillMount() {
-    let mode = this.props.location.state;
-    if (mode === 'back')
-      this.setState({ facingMode: { exact: 'environment' } });
+    //let mode = this.props.location.state;
+    // if (mode === 'back')
+    //   this.setState({ facingMode: { exact: 'environment' } });
+    this.setInputDevice();
     this.matcher();
   }
+
+  setInputDevice = async () => {
+    let inputDevice = [];
+    await navigator.mediaDevices
+      .enumerateDevices()
+      .then(
+        devices =>
+          (inputDevice = devices.filter(device => device.kind === 'videoinput'))
+      );
+    if (inputDevice.length > 1) {
+      await this.setState({ facingMode: { exact: 'environment' } });
+    }
+  };
 
   matcher = async () => {
     const faceMatcher = await createMatcher(bnk48JSON);

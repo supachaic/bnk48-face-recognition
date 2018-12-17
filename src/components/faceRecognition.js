@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { getFullFaceDescription, createMatcher } from '../api/face';
+import {
+  getFullFaceDescription,
+  createMatcher,
+  isFaceDetectionModelLoaded
+} from '../api/face';
 import DrawBox from './drawBox';
 import ShowDescriptors from './showDescriptors';
 
@@ -18,20 +22,26 @@ class FaceRecognition extends Component {
       faceMatcher: null,
       showDescriptors: false,
       imageDimension: null,
-      WIDTH: null
+      WIDTH: null,
+      isModelLoaded: !!isFaceDetectionModelLoaded()
     };
   }
 
   componentWillMount() {
     let _W = document.documentElement.clientWidth;
     if (_W > MaxWidth) _W = MaxWidth;
-    this.setState({ WIDTH: _W });
+    this.setState({ WIDTH: _W, isModelLoaded: !!isFaceDetectionModelLoaded() });
     this.matcher();
+  }
+
+  componentDidMount() {
+    this.setState({ isModelLoaded: !!isFaceDetectionModelLoaded() });
   }
 
   matcher = async () => {
     const faceMatcher = await createMatcher(bnk48JSON);
     this.setState({ faceMatcher });
+    this.setState({ isModelLoaded: !!isFaceDetectionModelLoaded() });
   };
 
   handleFileChange = async event => {
@@ -86,7 +96,8 @@ class FaceRecognition extends Component {
       fullDesc,
       faceMatcher,
       showDescriptors,
-      imageDimension
+      imageDimension,
+      isModelLoaded
     } = this.state;
 
     let HEIGHT = 0;
@@ -130,6 +141,7 @@ class FaceRecognition extends Component {
         </div>
 
         <div>
+          <p>Model Loaded: {isModelLoaded.toString()}</p>
           <p>Input Image file or URL</p>
           <input
             id="myFileUpload"
