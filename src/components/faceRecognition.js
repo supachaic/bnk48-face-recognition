@@ -34,14 +34,6 @@ class FaceRecognition extends Component {
     this.matcher();
   }
 
-  componentDidMount() {
-    console.log(!!isFaceDetectionModelLoaded());
-  }
-
-  componentWillUpdate() {
-    console.log(!!isFaceDetectionModelLoaded());
-  }
-
   matcher = async () => {
     const faceMatcher = await createMatcher(bnk48JSON);
     this.setState({ faceMatcher });
@@ -99,8 +91,7 @@ class FaceRecognition extends Component {
       fullDesc,
       faceMatcher,
       showDescriptors,
-      imageDimension,
-      modelLoaded
+      imageDimension
     } = this.state;
 
     let HEIGHT = 0;
@@ -164,7 +155,7 @@ class FaceRecognition extends Component {
             />
             <button onClick={this.handleButtonClick}>Upload</button>
           </div>
-          <p>{modelLoaded.toString()}</p>
+          <p>{!!fullDesc ? fullDesc.toString() : 'no desc'}</p>
           <div>
             <input
               name="descriptors"
