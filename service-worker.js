@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/bnk48-face-recognition/precache-manifest.977f03c228fadfcd3e6cdc15681bb951.js"
+  "/bnk48-face-recognition/precache-manifest.e86fd30578952572a82f9f905712fec1.js"
 );
 
 workbox.clientsClaim();
