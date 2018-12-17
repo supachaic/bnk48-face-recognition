@@ -16,7 +16,7 @@ class CameraFaceDetect extends Component {
       fullDesc: null,
       faceMatcher: null,
       facingMode: 'user',
-      inputDeviceVideo: null
+      inputDeviceVideo: 0
     };
   }
 
@@ -36,9 +36,19 @@ class CameraFaceDetect extends Component {
         devices =>
           (inputDevice = devices.filter(device => device.kind === 'videoinput'))
       );
-    if (inputDevice.length > 1) {
-      await this.setState({ facingMode: { exact: 'environment' } });
-    }
+    // if (inputDevice.length > 1) {
+    //   await this.setState({
+    //     inputDeviceVideo: inputDevice.length,
+    //     facingMode: { exact: 'environment' }
+    //   });
+    // }
+    await this.setState({
+      inputDeviceVideo: inputDevice.length,
+      facingMode: inputDevice.length > 1 ? { exact: 'environment' } : 'user'
+    });
+    this.interval = setInterval(() => {
+      this.capture();
+    }, 1000);
   };
 
   matcher = async () => {
@@ -46,25 +56,27 @@ class CameraFaceDetect extends Component {
     this.setState({ faceMatcher });
   };
 
-  componentDidMount() {
-    // set interval capture image from webcam every 1000ms
-    this.interval = setInterval(() => {
-      this.capture();
-    }, 1000);
-  }
+  // componentDidMount() {
+  //   // set interval capture image from webcam every 1000ms
+  //   this.interval = setInterval(() => {
+  //     this.capture();
+  //   }, 1000);
+  // }
 
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
   capture = async () => {
-    await getFullFaceDescription(this.webcam.current.getScreenshot()).then(
-      fullDesc => this.setState({ fullDesc })
-    );
+    if (!!this.webcam.current) {
+      await getFullFaceDescription(this.webcam.current.getScreenshot()).then(
+        fullDesc => this.setState({ fullDesc })
+      );
+    }
   };
 
   render() {
-    const { fullDesc, faceMatcher, facingMode } = this.state;
+    const { fullDesc, faceMatcher, facingMode, inputDeviceVideo } = this.state;
     const videoConstraints = {
       width: WIDTH,
       height: HEIGHT,
@@ -80,6 +92,7 @@ class CameraFaceDetect extends Component {
           alignItems: 'center'
         }}
       >
+        <p>Number of Camera: {inputDeviceVideo}</p>
         <div style={{ width: WIDTH, height: HEIGHT }}>
           <div style={{ position: 'relative', width: WIDTH }}>
             <div style={{ position: 'absolute' }}>
