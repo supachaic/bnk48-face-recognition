@@ -15,40 +15,33 @@ class CameraFaceDetect extends Component {
     this.state = {
       fullDesc: null,
       faceMatcher: null,
-      facingMode: 'user',
+      facingMode: null,
       inputDeviceVideo: 0
     };
   }
 
   componentWillMount() {
-    //let mode = this.props.location.state;
-    // if (mode === 'back')
-    //   this.setState({ facingMode: { exact: 'environment' } });
     this.setInputDevice();
     this.matcher();
   }
 
-  setInputDevice = async () => {
-    let inputDevice = [];
-    await navigator.mediaDevices
-      .enumerateDevices()
-      .then(
-        devices =>
-          (inputDevice = devices.filter(device => device.kind === 'videoinput'))
+  setInputDevice = () => {
+    navigator.mediaDevices.enumerateDevices().then(async devices => {
+      let inputDevice = await devices.filter(
+        device => device.kind === 'videoinput'
       );
-    // if (inputDevice.length > 1) {
-    //   await this.setState({
-    //     inputDeviceVideo: inputDevice.length,
-    //     facingMode: { exact: 'environment' }
-    //   });
-    // }
-    await this.setState({
-      inputDeviceVideo: inputDevice.length,
-      facingMode: inputDevice.length > 1 ? { exact: 'environment' } : 'user'
+      await this.setState({ inputDeviceVideo: inputDevice.length });
+      if (inputDevice.length < 2) {
+        await this.setState({
+          facingMode: 'user'
+        });
+      } else {
+        await this.setState({
+          facingMode: { exact: 'environment' }
+        });
+      }
+      this.startCapture();
     });
-    this.interval = setInterval(() => {
-      this.capture();
-    }, 1000);
   };
 
   matcher = async () => {
@@ -56,12 +49,11 @@ class CameraFaceDetect extends Component {
     this.setState({ faceMatcher });
   };
 
-  // componentDidMount() {
-  //   // set interval capture image from webcam every 1000ms
-  //   this.interval = setInterval(() => {
-  //     this.capture();
-  //   }, 1000);
-  // }
+  startCapture = () => {
+    this.interval = setInterval(() => {
+      this.capture();
+    }, 1000);
+  };
 
   componentWillUnmount() {
     clearInterval(this.interval);
@@ -77,11 +69,14 @@ class CameraFaceDetect extends Component {
 
   render() {
     const { fullDesc, faceMatcher, facingMode, inputDeviceVideo } = this.state;
-    const videoConstraints = {
-      width: WIDTH,
-      height: HEIGHT,
-      facingMode: facingMode
-    };
+    let videoConstraints = null;
+    if (!!facingMode) {
+      videoConstraints = {
+        width: WIDTH,
+        height: HEIGHT,
+        facingMode: facingMode
+      };
+    }
 
     return (
       <div
@@ -93,18 +88,27 @@ class CameraFaceDetect extends Component {
         }}
       >
         <p>Number of Camera: {inputDeviceVideo}</p>
-        <div style={{ width: WIDTH, height: HEIGHT }}>
+        <div
+          style={{
+            width: WIDTH,
+            height: HEIGHT,
+            marginTop: 10,
+            border: 'solid'
+          }}
+        >
           <div style={{ position: 'relative', width: WIDTH }}>
-            <div style={{ position: 'absolute' }}>
-              <Webcam
-                audio={false}
-                width={WIDTH}
-                height={HEIGHT}
-                ref={this.webcam}
-                screenshotFormat="image/jpeg"
-                videoConstraints={videoConstraints}
-              />
-            </div>
+            {!!videoConstraints ? (
+              <div style={{ position: 'absolute' }}>
+                <Webcam
+                  audio={false}
+                  width={WIDTH}
+                  height={HEIGHT}
+                  ref={this.webcam}
+                  screenshotFormat="image/jpeg"
+                  videoConstraints={videoConstraints}
+                />
+              </div>
+            ) : null}
             {!!fullDesc ? (
               <DrawBox
                 fullDesc={fullDesc}
