@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { getFullFaceDescription, createMatcher } from '../api/face';
+import {
+  getFullFaceDescription,
+  createMatcher,
+  isFaceDetectionModelLoaded
+} from '../api/face';
 import DrawBox from './drawBox';
 import ShowDescriptors from './showDescriptors';
 
-//const WIDTH = 500; //photo display width
 const MaxWidth = 800;
-//const WIDTH = document.documentElement.clientWidth;
 const bnk48JSON = require('../descriptors/bnk48.json');
 const boxColor = '#BE80B5';
 
@@ -20,7 +22,8 @@ class FaceRecognition extends Component {
       faceMatcher: null,
       showDescriptors: false,
       imageDimension: null,
-      WIDTH: null
+      WIDTH: null,
+      modelLoaded: !!isFaceDetectionModelLoaded()
     };
   }
 
@@ -29,6 +32,14 @@ class FaceRecognition extends Component {
     if (_W > MaxWidth) _W = MaxWidth;
     this.setState({ WIDTH: _W });
     this.matcher();
+  }
+
+  componentDidMount() {
+    console.log(!!isFaceDetectionModelLoaded());
+  }
+
+  componentWillUpdate() {
+    console.log(!!isFaceDetectionModelLoaded());
   }
 
   matcher = async () => {
@@ -88,7 +99,8 @@ class FaceRecognition extends Component {
       fullDesc,
       faceMatcher,
       showDescriptors,
-      imageDimension
+      imageDimension,
+      modelLoaded
     } = this.state;
 
     let HEIGHT = 0;
@@ -152,7 +164,7 @@ class FaceRecognition extends Component {
             />
             <button onClick={this.handleButtonClick}>Upload</button>
           </div>
-
+          <p>{modelLoaded.toString()}</p>
           <div>
             <input
               name="descriptors"

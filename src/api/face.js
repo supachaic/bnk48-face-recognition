@@ -1,6 +1,7 @@
 import * as faceapi from 'face-api.js';
 
 const MODEL_URL = 'https://supachaic.github.io/bnk48-face-recognition/models';
+// tiny_face_detector options
 const useTinyModel = true;
 
 const maxDescriptorDistance = 0.5;
@@ -14,7 +15,12 @@ async function loadModels() {
 }
 
 loadModels();
-const OPTION = new faceapi.TinyFaceDetectorOptions(MODEL_URL);
+let inputSize = 512;
+let scoreThreshold = 0.5;
+const OPTION = new faceapi.TinyFaceDetectorOptions({
+  inputSize,
+  scoreThreshold
+});
 
 export async function getFullFaceDescription(blob) {
   // fetch image to api
@@ -48,4 +54,9 @@ export async function createMatcher(faceProfile) {
     maxDescriptorDistance
   );
   return faceMatcher;
+}
+
+export function isFaceDetectionModelLoaded() {
+  let result = faceapi.nets.tinyFaceDetector.params;
+  return result;
 }
