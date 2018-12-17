@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import {
-  getFullFaceDescription,
-  createMatcher,
-  isFaceDetectionModelLoaded
-} from '../api/face';
+import { getFullFaceDescription, createMatcher } from '../api/face';
 import DrawBox from './drawBox';
 import ShowDescriptors from './showDescriptors';
 
@@ -22,8 +18,7 @@ class FaceRecognition extends Component {
       faceMatcher: null,
       showDescriptors: false,
       imageDimension: null,
-      WIDTH: null,
-      modelLoaded: !!isFaceDetectionModelLoaded()
+      WIDTH: null
     };
   }
 
@@ -135,7 +130,7 @@ class FaceRecognition extends Component {
         </div>
 
         <div>
-          <p>Test image here</p>
+          <p>Input Image file or URL</p>
           <input
             id="myFileUpload"
             type="file"
@@ -150,14 +145,11 @@ class FaceRecognition extends Component {
               id="url"
               placeholder="Place your photo URL here (only .jpg, .jpeg, .png)"
               pattern="https://.*"
-              size="50"
+              size="30"
               onChange={this.handleURLChange}
             />
             <button onClick={this.handleButtonClick}>Upload</button>
           </div>
-          <p>
-            {!!fullDesc ? fullDesc.map(fd => fd.detection._score) : 'no desc'}
-          </p>
           <div>
             <input
               name="descriptors"
@@ -165,7 +157,7 @@ class FaceRecognition extends Component {
               checked={this.state.showDescriptors}
               onChange={this.handleDescriptorsCheck}
             />
-            <label>Show Descriptors</label>
+            <label>Show Descriptions</label>
           </div>
           {!!showDescriptors ? <ShowDescriptors fullDesc={fullDesc} /> : null}
         </div>

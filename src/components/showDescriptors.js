@@ -18,14 +18,10 @@ class ShowDescriptors extends Component {
 
   update = (props = this.props) => {
     let { fullDesc } = props;
-    // if (!!fullDesc) {
-    //   fullDesc.then(desc => {
-    //     this.setState({ descriptors: desc.map(fd => fd.descriptor) });
-    //   });
-    // }
-
     if (!!fullDesc) {
-      this.setState({ descriptors: fullDesc.map(fd => fd.descriptor) });
+      this.setState({
+        descriptors: fullDesc.map(fd => fd.descriptor)
+      });
     }
   };
 
@@ -41,7 +37,7 @@ class ShowDescriptors extends Component {
           alignItems: 'center'
         }}
       >
-        <h3>Descriptors</h3>
+        <h3>Detail Descriptions</h3>
         {!!descriptors
           ? descriptors.map((descriptor, i) => (
               <p
@@ -54,6 +50,7 @@ class ShowDescriptors extends Component {
                   borderColor: 'blue'
                 }}
               >
+                <strong>Descriptor_{i}: </strong>
                 {descriptor.toString()}
               </p>
             ))
