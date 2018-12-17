@@ -18,22 +18,20 @@ class DrawBox extends Component {
     this.getDescription(newProps);
   }
 
-  getDescription = (props = this.props) => {
+  getDescription = async (props = this.props) => {
     const { fullDesc, faceMatcher } = props;
     if (!!fullDesc) {
-      fullDesc.then(async desc => {
-        await this.setState({
-          descriptors: desc.map(fd => fd.descriptor),
-          detections: desc.map(fd => fd.detection)
-        });
-        if (!!this.state.descriptors && !!faceMatcher) {
-          let match = await this.state.descriptors.map(descriptor =>
-            faceMatcher.findBestMatch(descriptor)
-          );
-          this.setState({ match });
-          console.log(match);
-        }
+      await this.setState({
+        descriptors: fullDesc.map(fd => fd.descriptor),
+        detections: fullDesc.map(fd => fd.detection)
       });
+      if (!!this.state.descriptors && !!faceMatcher) {
+        let match = await this.state.descriptors.map(descriptor =>
+          faceMatcher.findBestMatch(descriptor)
+        );
+        this.setState({ match });
+        console.log(match);
+      }
     }
   };
 

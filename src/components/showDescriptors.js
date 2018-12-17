@@ -18,10 +18,14 @@ class ShowDescriptors extends Component {
 
   update = (props = this.props) => {
     let { fullDesc } = props;
+    // if (!!fullDesc) {
+    //   fullDesc.then(desc => {
+    //     this.setState({ descriptors: desc.map(fd => fd.descriptor) });
+    //   });
+    // }
+
     if (!!fullDesc) {
-      fullDesc.then(desc => {
-        this.setState({ descriptors: desc.map(fd => fd.descriptor) });
-      });
+      this.setState({ descriptors: fullDesc.map(fd => fd.descriptor) });
     }
   };
 

@@ -61,9 +61,9 @@ class FaceRecognition extends Component {
   };
 
   handleImageChange = async (image = this.state.imageURL) => {
-    await this.setState({
-      fullDesc: getFullFaceDescription(image)
-    });
+    await getFullFaceDescription(image).then(fullDesc =>
+      this.setState({ fullDesc })
+    );
     this.getImageDimension(image);
   };
 
@@ -155,7 +155,9 @@ class FaceRecognition extends Component {
             />
             <button onClick={this.handleButtonClick}>Upload</button>
           </div>
-          <p>{!!fullDesc ? fullDesc.toString() : 'no desc'}</p>
+          <p>
+            {!!fullDesc ? fullDesc.map(fd => fd.detection._score) : 'no desc'}
+          </p>
           <div>
             <input
               name="descriptors"

@@ -43,9 +43,9 @@ class CameraFaceDetect extends Component {
   }
 
   capture = async () => {
-    await this.setState({
-      fullDesc: getFullFaceDescription(this.webcam.current.getScreenshot())
-    });
+    await getFullFaceDescription(this.webcam.current.getScreenshot()).then(
+      fullDesc => this.setState({ fullDesc })
+    );
   };
 
   render() {
