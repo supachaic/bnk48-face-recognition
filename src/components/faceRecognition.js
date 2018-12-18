@@ -11,7 +11,7 @@ import ShowDescriptors from './showDescriptors';
 const MaxWidth = 600;
 const bnk48JSON = require('../descriptors/bnk48.json');
 const boxColor = '#BE80B5';
-const testImg = '/img/test.jpg';
+const testImg = require('../img/test.jpg');
 
 const INIT_STATE = {
   url: null,
@@ -35,15 +35,19 @@ class FaceRecognition extends Component {
   }
 
   componentWillMount() {
-    console.log('component will mount');
     this.resetState();
     let _W = document.documentElement.clientWidth;
     if (_W > MaxWidth) _W = MaxWidth;
     this.setState({ WIDTH: _W });
-    this.matcher();
-    this.setState({ imageURL: testImg, loading: true });
-    this.handleImageChange(testImg);
+    this.mounting();
   }
+
+  mounting = async () => {
+    await this.matcher();
+    await this.getImageDimension(testImg);
+    await this.setState({ imageURL: testImg, loading: true });
+    await this.handleImageChange(testImg);
+  };
 
   matcher = async () => {
     const faceMatcher = await createMatcher(bnk48JSON);
@@ -78,10 +82,10 @@ class FaceRecognition extends Component {
   };
 
   handleImageChange = async (image = this.state.imageURL) => {
+    await this.getImageDimension(image);
     await getFullFaceDescription(image).then(fullDesc => {
       this.setState({ fullDesc, loading: false });
     });
-    this.getImageDimension(image);
   };
 
   getImageDimension = imageURL => {
