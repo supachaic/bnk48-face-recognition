@@ -1,14 +1,14 @@
 {
   "main.css": "/bnk48-face-recognition/static/css/main.42450891.chunk.css",
-  "main.js": "/bnk48-face-recognition/static/js/main.e48664de.chunk.js",
-  "main.js.map": "/bnk48-face-recognition/static/js/main.e48664de.chunk.js.map",
+  "main.js": "/bnk48-face-recognition/static/js/main.1562904d.chunk.js",
+  "main.js.map": "/bnk48-face-recognition/static/js/main.1562904d.chunk.js.map",
   "static/js/1.6ff9e7ed.chunk.js": "/bnk48-face-recognition/static/js/1.6ff9e7ed.chunk.js",
   "static/js/1.6ff9e7ed.chunk.js.map": "/bnk48-face-recognition/static/js/1.6ff9e7ed.chunk.js.map",
   "runtime~main.js": "/bnk48-face-recognition/static/js/runtime~main.4942cd80.js",
   "runtime~main.js.map": "/bnk48-face-recognition/static/js/runtime~main.4942cd80.js.map",
-  "static/media/test.jpg": "/bnk48-face-recognition/static/media/test.3cae0ac5.jpg",
+  "static/media/test.jpg": "/bnk48-face-recognition/static/media/test.34e86f06.jpg",
   "static/css/main.42450891.chunk.css.map": "/bnk48-face-recognition/static/css/main.42450891.chunk.css.map",
   "index.html": "/bnk48-face-recognition/index.html",
-  "precache-manifest.9cec417dc305fbeb9b9cd5aa02b38d02.js": "/bnk48-face-recognition/precache-manifest.9cec417dc305fbeb9b9cd5aa02b38d02.js",
+  "precache-manifest.b7cd82b08c5b52aadffc3db5be4e75b8.js": "/bnk48-face-recognition/precache-manifest.b7cd82b08c5b52aadffc3db5be4e75b8.js",
   "service-worker.js": "/bnk48-face-recognition/service-worker.js"
 }
