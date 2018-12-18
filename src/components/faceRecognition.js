@@ -35,15 +35,14 @@ class FaceRecognition extends Component {
   }
 
   componentWillMount() {
+    console.log('component will mount');
+    this.resetState();
     let _W = document.documentElement.clientWidth;
     if (_W > MaxWidth) _W = MaxWidth;
     this.setState({ WIDTH: _W });
     this.matcher();
-  }
-
-  componentDidCatch() {
-    this.setState({ imageURL: testImg });
-    this.handleImageChange();
+    this.setState({ imageURL: testImg, loading: true });
+    this.handleImageChange(testImg);
   }
 
   matcher = async () => {
@@ -132,7 +131,7 @@ class FaceRecognition extends Component {
       );
     } else if (loading) {
       status = <p style={{ color: 'blue' }}>Status: LOADING...</p>;
-    } else if (!!imageURL && !loading) {
+    } else if (!!fullDesc && !!imageURL && !loading) {
       if (fullDesc.length < 2)
         status = <p>Status: {fullDesc.length} Face Detect</p>;
       if (fullDesc.length > 1)
@@ -174,8 +173,14 @@ class FaceRecognition extends Component {
             </div>
           ) : null}
         </div>
-
-        <div>
+        <div
+          style={{
+            width: WIDTH,
+            padding: 10,
+            border: 'solid',
+            marginTop: 10
+          }}
+        >
           <p>Input Image file or URL</p>
           <input
             id="myFileUpload"
