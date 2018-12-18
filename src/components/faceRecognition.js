@@ -30,6 +30,7 @@ class FaceRecognition extends Component {
       faceMatcher: null,
       showDescriptors: false,
       WIDTH: null,
+      HEIGHT: 0,
       isModelLoaded: !!isFaceDetectionModelLoaded()
     };
   }
@@ -91,7 +92,9 @@ class FaceRecognition extends Component {
   getImageDimension = imageURL => {
     let img = new Image();
     img.onload = () => {
+      let HEIGHT = (this.state.WIDTH * img.height) / img.width;
       this.setState({
+        HEIGHT,
         imageDimension: {
           width: img.width,
           height: img.height
@@ -111,21 +114,15 @@ class FaceRecognition extends Component {
   render() {
     const {
       WIDTH,
+      HEIGHT,
       imageURL,
       fullDesc,
       faceMatcher,
       showDescriptors,
-      imageDimension,
       isModelLoaded,
       error,
       loading
     } = this.state;
-
-    // Set display image Height after resize
-    let HEIGHT = 0;
-    if (!!imageDimension) {
-      HEIGHT = (WIDTH * imageDimension.height) / imageDimension.width;
-    }
 
     // Display working status
     let status = <p>Status: Model Loaded = {isModelLoaded.toString()}</p>;
@@ -232,7 +229,7 @@ class FaceRecognition extends Component {
               checked={this.state.showDescriptors}
               onChange={this.handleDescriptorsCheck}
             />
-            <label>Show Descriptions</label>
+            <label>Show Descriptors</label>
           </div>
           {!!showDescriptors ? <ShowDescriptors fullDesc={fullDesc} /> : null}
         </div>
