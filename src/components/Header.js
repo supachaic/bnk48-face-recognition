@@ -8,12 +8,7 @@ class Header extends Component {
         <div className="Navbar">
           <Link to="/">Home</Link>
           <Link to="/photo">Photo Input</Link>
-          <Link to={{ pathname: '/camera-front', state: 'front' }}>
-            Video Camera
-          </Link>
-          {/* <Link to={{ pathname: '/camera-back', state: 'back' }}>
-            Back Camera
-          </Link> */}
+          <Link to="/camera">Video Camera</Link>
         </div>
       </header>
     );

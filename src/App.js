@@ -4,10 +4,7 @@ import FaceRecognition from './components/faceRecognition';
 import CameraFaceDetect from './components/cameraFaceDetect';
 import Home from './components/Home';
 import Header from './components/Header';
-//import { createBrowserHistory } from 'history';
 import './App.css';
-
-// var hist = createBrowserHistory();
 
 class App extends Component {
   render() {
@@ -18,8 +15,7 @@ class App extends Component {
             <Header />
             <Route exact path="/" component={Home} />
             <Route exact path="/photo" component={FaceRecognition} />
-            <Route exact path="/camera-front" component={CameraFaceDetect} />
-            <Route exact path="/camera-back" component={CameraFaceDetect} />
+            <Route exact path="/camera" component={CameraFaceDetect} />
           </div>
         </Router>
       </div>

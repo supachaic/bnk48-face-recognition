@@ -8,20 +8,27 @@ import {
 import DrawBox from './drawBox';
 import ShowDescriptors from './showDescriptors';
 
-const MaxWidth = 800;
+const MaxWidth = 600;
 const bnk48JSON = require('../descriptors/bnk48.json');
 const boxColor = '#BE80B5';
+const testImg = '/img/test.jpg';
+
+const INIT_STATE = {
+  url: null,
+  imageURL: null,
+  fullDesc: null,
+  imageDimension: null,
+  error: null,
+  loading: false
+};
 
 class FaceRecognition extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: null,
-      imageURL: null,
-      fullDesc: null,
+      ...INIT_STATE,
       faceMatcher: null,
       showDescriptors: false,
-      imageDimension: null,
       WIDTH: null,
       isModelLoaded: !!isFaceDetectionModelLoaded()
     };
@@ -30,23 +37,25 @@ class FaceRecognition extends Component {
   componentWillMount() {
     let _W = document.documentElement.clientWidth;
     if (_W > MaxWidth) _W = MaxWidth;
-    this.setState({ WIDTH: _W, isModelLoaded: !!isFaceDetectionModelLoaded() });
+    this.setState({ WIDTH: _W });
     this.matcher();
   }
 
-  componentDidMount() {
-    this.setState({ isModelLoaded: !!isFaceDetectionModelLoaded() });
+  componentDidCatch() {
+    this.setState({ imageURL: testImg });
+    this.handleImageChange();
   }
 
   matcher = async () => {
     const faceMatcher = await createMatcher(bnk48JSON);
     this.setState({ faceMatcher });
-    this.setState({ isModelLoaded: !!isFaceDetectionModelLoaded() });
   };
 
   handleFileChange = async event => {
+    this.resetState();
     await this.setState({
-      imageURL: URL.createObjectURL(event.target.files[0])
+      imageURL: URL.createObjectURL(event.target.files[0]),
+      loading: true
     });
     this.handleImageChange();
   };
@@ -56,19 +65,23 @@ class FaceRecognition extends Component {
   };
 
   handleButtonClick = async () => {
-    let blob = await fetch(this.state.url).then(r => r.blob());
-    if (blob.type.includes('image')) {
+    this.resetState();
+    let blob = await fetch(this.state.url)
+      .then(r => r.blob())
+      .catch(error => this.setState({ error }));
+    if (!!blob && blob.type.includes('image')) {
       this.setState({
-        imageURL: URL.createObjectURL(blob)
+        imageURL: URL.createObjectURL(blob),
+        loading: true
       });
       this.handleImageChange();
     }
   };
 
   handleImageChange = async (image = this.state.imageURL) => {
-    await getFullFaceDescription(image).then(fullDesc =>
-      this.setState({ fullDesc })
-    );
+    await getFullFaceDescription(image).then(fullDesc => {
+      this.setState({ fullDesc, loading: false });
+    });
     this.getImageDimension(image);
   };
 
@@ -89,6 +102,9 @@ class FaceRecognition extends Component {
     this.setState({ showDescriptors: event.target.checked });
   };
 
+  resetState = () => {
+    this.setState({ ...INIT_STATE });
+  };
   render() {
     const {
       WIDTH,
@@ -97,12 +113,30 @@ class FaceRecognition extends Component {
       faceMatcher,
       showDescriptors,
       imageDimension,
-      isModelLoaded
+      isModelLoaded,
+      error,
+      loading
     } = this.state;
 
+    // Set display image Height after resize
     let HEIGHT = 0;
     if (!!imageDimension) {
       HEIGHT = (WIDTH * imageDimension.height) / imageDimension.width;
+    }
+
+    // Display working status
+    let status = <p>Status: Model Loaded = {isModelLoaded.toString()}</p>;
+    if (!!error && error.toString() === 'TypeError: Failed to fetch') {
+      status = (
+        <p style={{ color: 'red' }}>Status: Error Failed to fetch Image URL</p>
+      );
+    } else if (loading) {
+      status = <p style={{ color: 'blue' }}>Status: LOADING...</p>;
+    } else if (!!imageURL && !loading) {
+      if (fullDesc.length < 2)
+        status = <p>Status: {fullDesc.length} Face Detect</p>;
+      if (fullDesc.length > 1)
+        status = <p>Status: {fullDesc.length} Faces Detect</p>;
     }
 
     return (
@@ -113,6 +147,7 @@ class FaceRecognition extends Component {
           alignItems: 'center'
         }}
       >
+        {status}
         <div
           style={{
             width: WIDTH,
@@ -141,7 +176,6 @@ class FaceRecognition extends Component {
         </div>
 
         <div>
-          <p>Model Loaded: {isModelLoaded.toString()}</p>
           <p>Input Image file or URL</p>
           <input
             id="myFileUpload"

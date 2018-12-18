@@ -5,8 +5,8 @@ import { getFullFaceDescription, createMatcher } from '../api/face';
 import DrawBox from './drawBox';
 
 const bnk48JSON = require('../descriptors/bnk48.json');
-const WIDTH = 480;
-const HEIGHT = 480;
+const WIDTH = 420;
+const HEIGHT = 420;
 
 class CameraFaceDetect extends Component {
   constructor(props) {
@@ -15,8 +15,7 @@ class CameraFaceDetect extends Component {
     this.state = {
       fullDesc: null,
       faceMatcher: null,
-      facingMode: null,
-      inputDeviceVideo: 0
+      facingMode: null
     };
   }
 
@@ -30,7 +29,6 @@ class CameraFaceDetect extends Component {
       let inputDevice = await devices.filter(
         device => device.kind === 'videoinput'
       );
-      await this.setState({ inputDeviceVideo: inputDevice.length });
       if (inputDevice.length < 2) {
         await this.setState({
           facingMode: 'user'
@@ -68,14 +66,20 @@ class CameraFaceDetect extends Component {
   };
 
   render() {
-    const { fullDesc, faceMatcher, facingMode, inputDeviceVideo } = this.state;
+    const { fullDesc, faceMatcher, facingMode } = this.state;
     let videoConstraints = null;
+    let camera = '';
     if (!!facingMode) {
       videoConstraints = {
         width: WIDTH,
         height: HEIGHT,
         facingMode: facingMode
       };
+      if (facingMode === 'user') {
+        camera = 'Front';
+      } else {
+        camera = 'Back';
+      }
     }
 
     return (
@@ -87,13 +91,11 @@ class CameraFaceDetect extends Component {
           alignItems: 'center'
         }}
       >
-        <p>Number of Camera: {inputDeviceVideo}</p>
+        <p>Camera: {camera}</p>
         <div
           style={{
             width: WIDTH,
-            height: HEIGHT,
-            marginTop: 10,
-            border: 'solid'
+            height: HEIGHT
           }}
         >
           <div style={{ position: 'relative', width: WIDTH }}>
