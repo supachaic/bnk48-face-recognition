@@ -142,6 +142,24 @@ class FaceRecognition extends Component {
         status = <p>Status: {fullDesc.length} Faces Detect</p>;
     }
 
+    // Loading Spinner
+    let spinner = (
+      <div
+        style={{
+          margin: 0,
+          color: '#BE80B5',
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%,-50%)',
+          textShadow: '2px 2px 3px #fff'
+        }}
+      >
+        <div className="loading" />
+        <h3>Processing...</h3>
+      </div>
+    );
+
     return (
       <div
         style={{
@@ -153,6 +171,7 @@ class FaceRecognition extends Component {
         {status}
         <div
           style={{
+            position: 'relative',
             width: WIDTH,
             height: HEIGHT
           }}
@@ -176,6 +195,7 @@ class FaceRecognition extends Component {
               ) : null}
             </div>
           ) : null}
+          {loading ? spinner : null}
         </div>
         <div
           style={{
