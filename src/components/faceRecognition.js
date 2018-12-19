@@ -7,9 +7,9 @@ import {
 } from '../api/face';
 import DrawBox from './drawBox';
 import ShowDescriptors from './showDescriptors';
+import { JSON_PROFILE } from '../common/profile';
 
 const MaxWidth = 600;
-const bnk48JSON = require('../descriptors/bnk48.json');
 const boxColor = '#BE80B5';
 const testImg = require('../img/test.jpg');
 
@@ -51,7 +51,7 @@ class FaceRecognition extends Component {
   };
 
   matcher = async () => {
-    const faceMatcher = await createMatcher(bnk48JSON);
+    const faceMatcher = await createMatcher(JSON_PROFILE);
     this.setState({ faceMatcher });
   };
 

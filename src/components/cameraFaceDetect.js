@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom';
 import Webcam from 'react-webcam';
 import { getFullFaceDescription, createMatcher } from '../api/face';
 import DrawBox from './drawBox';
+import { JSON_PROFILE } from '../common/profile';
 
-const bnk48JSON = require('../descriptors/bnk48.json');
 const WIDTH = 420;
 const HEIGHT = 420;
 
@@ -43,7 +43,7 @@ class CameraFaceDetect extends Component {
   };
 
   matcher = async () => {
-    const faceMatcher = await createMatcher(bnk48JSON);
+    const faceMatcher = await createMatcher(JSON_PROFILE);
     this.setState({ faceMatcher });
   };
 
