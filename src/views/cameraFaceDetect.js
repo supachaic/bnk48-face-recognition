@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Webcam from 'react-webcam';
 import { getFullFaceDescription, createMatcher } from '../api/face';
-import DrawBox from './drawBox';
+import DrawBox from '../components/drawBox';
 import { JSON_PROFILE } from '../common/profile';
 
 const WIDTH = 420;

@@ -5,8 +5,8 @@ import {
   createMatcher,
   isFaceDetectionModelLoaded
 } from '../api/face';
-import DrawBox from './drawBox';
-import ShowDescriptors from './showDescriptors';
+import DrawBox from '../components/drawBox';
+import ShowDescriptors from '../components/showDescriptors';
 import { JSON_PROFILE } from '../common/profile';
 
 const MaxWidth = 600;
