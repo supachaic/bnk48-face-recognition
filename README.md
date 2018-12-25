@@ -1,6 +1,8 @@
 # BNK48 Facial Recognition Web App
 
-** Single Page App for face detection and recognition of BNK48 idol group, running in front-end browser using React and [face-api.js](https://github.com/justadudewhohacks/face-api.js) (without back-end) **
+Single Page App for face detection and recognition of BNK48 idol group, running in front-end browser using React and [face-api.js](https://github.com/justadudewhohacks/face-api.js) (without back-end)
+
+![example-image](https://raw.githubusercontent.com/supachaic/bnk48-face-recognition/master/src/img/example.jpg)
 
 ## Demo
 
@@ -27,7 +29,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## How to create descriptors profile
 
-This App use descriptors profile of known face (facial feature vector of 128 array of number) stores in JSON format as reference for face recognition. The sample profile of BNK48 current members (as of December 2018) is located in folder `/src/descriptors/bnk48.json`
+This App uses descriptors profile of known faces (facial feature vector of 128 array of number) stored in JSON format as reference for face recognition. The sample profile of BNK48 current members (as of December 2018) is located in folder `src/descriptors/bnk48.json`
 
 ### JSON Profile
 
@@ -35,7 +37,7 @@ The JSON profile contains members' nickname and array of 5-10 facial feature vec
 
 JSON File Format:
 
-```json
+```text
 {
   "MEMBER_1": {
     "name": "nickname",
@@ -55,9 +57,9 @@ JSON File Format:
 
 Note:
 
-- ** `MEMBER_1`, `MEMBER_2` are keys to be referred by the App **
-- ** `nickname` will be displayed when app recognize the face **
-- \*\* `FEATURE_VECTOR` is array of 128 number facial feature known as `descriptor` in face-api.js
+- `MEMBER_1`, `MEMBER_2` are object keys to be referred by the App
+- `nickname` will be displayed when app recognizes the face
+- `FEATURE_VECTOR` is array of 128 number facial feature known as `descriptor` in face-api.js
 
 ### Create new profile
 

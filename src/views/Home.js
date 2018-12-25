@@ -8,11 +8,8 @@ export default class Home extends Component {
     return (
       <div
         style={{
-          border: 'solid',
-          borderRadius: 10,
           width: { WIDTH },
           margin: 10,
-          marginTop: 10,
           padding: 5
         }}
       >
