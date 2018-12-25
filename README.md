@@ -2,8 +2,6 @@
 
 ** Single Page App for face detection and recognition of BNK48 idol group, running in front-end browser using React and [face-api.js](https://github.com/justadudewhohacks/face-api.js) (without back-end) **
 
-# Examples
-
 ## Demo
 
 **[Check out the Demo in Github Page](https://supachaic.github.io/bnk48-face-recognition/)**
