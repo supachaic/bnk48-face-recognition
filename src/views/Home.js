@@ -66,6 +66,11 @@ export default class Home extends Component {
               The App might recognize member wrongly if their face look similar,
               or the object face not look straight to camera.
             </li>
+            <li>
+              This App might not work for older smartphone or in some browsers.
+              (I found my Iphone4 cannot process detection properly, while
+              iphone7 or 8 are working fine.)
+            </li>
           </div>
           <h4>Video Camera</h4>
           <li>
