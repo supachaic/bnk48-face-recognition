@@ -17,11 +17,8 @@ export default class Home extends Component {
       >
         <h2>BNK48 Facial Recognition App</h2>
         <h4>
-          Single Page App for face detection and recognition of BNK48 idol group
-        </h4>
-        <h4>
-          {' '}
-          running in front-end browser using React and{' '}
+          Single Page App for face detection and recognition of BNK48 idol
+          group, running in front-end browser using React and{' '}
           <a href="https://github.com/justadudewhohacks/face-api.js">
             face-api.js
           </a>{' '}
