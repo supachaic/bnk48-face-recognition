@@ -87,7 +87,6 @@ class FaceRecognition extends Component {
   handleImageChange = async (image = this.state.imageURL) => {
     await this.getImageDimension(image);
     await getFullFaceDescription(image).then(fullDesc => {
-      console.log(fullDesc);
       this.setState({ fullDesc, loading: false });
     });
   };

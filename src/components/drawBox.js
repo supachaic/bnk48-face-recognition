@@ -30,7 +30,6 @@ class DrawBox extends Component {
           faceMatcher.findBestMatch(descriptor)
         );
         this.setState({ match });
-        console.log(match);
       }
     }
   };
