@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Webcam from 'react-webcam';
-import { getFullFaceDescription, createMatcher } from '../api/face';
+import { loadModels, getFullFaceDescription, createMatcher } from '../api/face';
 import DrawBox from '../components/drawBox';
 import { JSON_PROFILE } from '../common/profile';
 
 const WIDTH = 420;
 const HEIGHT = 420;
+const inputSize = 160;
 
 class CameraFaceDetect extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class CameraFaceDetect extends Component {
   }
 
   componentWillMount() {
+    loadModels();
     this.setInputDevice();
     this.matcher();
   }
@@ -59,9 +61,10 @@ class CameraFaceDetect extends Component {
 
   capture = async () => {
     if (!!this.webcam.current) {
-      await getFullFaceDescription(this.webcam.current.getScreenshot()).then(
-        fullDesc => this.setState({ fullDesc })
-      );
+      await getFullFaceDescription(
+        this.webcam.current.getScreenshot(),
+        inputSize
+      ).then(fullDesc => this.setState({ fullDesc }));
     }
   };
 

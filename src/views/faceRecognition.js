@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import {
+  loadModels,
   getFullFaceDescription,
   createMatcher,
   isFaceDetectionModelLoaded
@@ -44,6 +45,7 @@ class FaceRecognition extends Component {
   }
 
   mounting = async () => {
+    await loadModels();
     await this.matcher();
     await this.getImageDimension(testImg);
     await this.setState({ imageURL: testImg, loading: true });
@@ -85,6 +87,7 @@ class FaceRecognition extends Component {
   handleImageChange = async (image = this.state.imageURL) => {
     await this.getImageDimension(image);
     await getFullFaceDescription(image).then(fullDesc => {
+      console.log(fullDesc);
       this.setState({ fullDesc, loading: false });
     });
   };
