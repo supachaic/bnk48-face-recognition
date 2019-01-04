@@ -12,19 +12,19 @@ self.__precacheManifest = [
     "url": "/bnk48-face-recognition/static/js/runtime~main.4942cd80.js"
   },
   {
-    "revision": "2c5cb99c8513309debc9",
-    "url": "/bnk48-face-recognition/static/js/main.2c5cb99c.chunk.js"
+    "revision": "aa92e8d141a15f948b2d",
+    "url": "/bnk48-face-recognition/static/js/main.aa92e8d1.chunk.js"
   },
   {
     "revision": "8e135f868b6073b13a63",
     "url": "/bnk48-face-recognition/static/js/1.8e135f86.chunk.js"
   },
   {
-    "revision": "2c5cb99c8513309debc9",
+    "revision": "aa92e8d141a15f948b2d",
     "url": "/bnk48-face-recognition/static/css/main.1a574fcf.chunk.css"
   },
   {
-    "revision": "bd2b6d245e922a7bebfd91005aabc9c4",
+    "revision": "797a9672f719cb9be1b3979ae5077800",
     "url": "/bnk48-face-recognition/index.html"
   }
 ];
