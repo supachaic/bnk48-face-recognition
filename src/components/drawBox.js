@@ -41,13 +41,15 @@ class DrawBox extends Component {
 
     if (!!detections) {
       box = detections.map((detection, i) => {
-        const box = detection.relativeBox;
+        const relativeBox = detection.relativeBox;
         const dimension = detection._imageDims;
-        let _X = imageWidth * box._x;
-        let _Y = (box._y * imageWidth * dimension._height) / dimension._width;
-        let _W = imageWidth * box.width;
+        let _X = imageWidth * relativeBox._x;
+        let _Y =
+          (relativeBox._y * imageWidth * dimension._height) / dimension._width;
+        let _W = imageWidth * relativeBox.width;
         let _H =
-          (box.height * imageWidth * dimension._height) / dimension._width;
+          (relativeBox.height * imageWidth * dimension._height) /
+          dimension._width;
         return (
           <div key={i}>
             <div

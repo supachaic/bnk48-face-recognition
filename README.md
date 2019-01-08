@@ -79,7 +79,13 @@ In this project, with 5-10 feature vector per member for 30-40 members of BNK48 
 
 Since we don't need back-end in this project, so any static hosting platform would be sufficient for our small app. To deploy React app on Github Pages will require some trick. Make sure you have all this setting then you will be fine. (if you are not going to use Github Pages, this setup would not be necessary)
 
-Step 1 - App.js : make sure you have `basename: process.env.PUBLIC_URL` in `Router` component
+Step 1 - You need to have Github account and create new repository. Then you copy the new reposity git URL.
+
+```bash
+https://github.com/YOUR_GITHUB_ACCOUNT/YOUR-APP-NAME.git
+```
+
+Step 2 - App.js : make sure you have `basename: process.env.PUBLIC_URL` in `Router` component
 
 ```javascript
 import React, { Component } from 'react';
@@ -102,19 +108,19 @@ class App extends Component {
 export default App;
 ```
 
-Step 2 - package.json : add your `homepage`
-
-```json
-"homepage": "http://YOUR_GITHUB_ACCOUNT.github.io/YOUR-APP-NAME"
-```
-
 Step 3 - install gh-pages
 
 ```bash
 npm i gh-pages
 ```
 
-Step 4 - package.json : add `predeploy` and `deploy` under `scripts` as below.
+Step 4.1 - package.json : add your `homepage`
+
+```json
+"homepage": "http://YOUR_GITHUB_ACCOUNT.github.io/YOUR-APP-NAME"
+```
+
+Step 4.2 - package.json : add `predeploy` and `deploy` under `scripts` as below.
 
 ```json
 "scripts": {
@@ -132,6 +138,7 @@ Step 5 - commit and update your git and run deploy
 ```bash
 git add .
 git commit -am "make something good"
+git remote add origin https://github.com/YOUR_GITHUB_ACCOUNT/react-face-recognition.git
 git push -u origin master
 
 npm run deploy
@@ -163,16 +170,15 @@ If you want to use SSD Mobilenet or MTCNN, you need to load new weight to `publi
 Function `getFullFaceDescription` will accept image blob and return with full description (`Detection`, `Landmarks`, and `Descriptor`) of all faces detected in the image. I use Box information from `Detection` to draw face box. And use `Descriptor` to input in `faceMatcher` to find best match. (`Landmarks` are not used in this project)
 
 ```javascript
-// tiny_face_detector options
-let inputSize = 512;
-let scoreThreshold = 0.5;
-const OPTION = new faceapi.TinyFaceDetectorOptions({
-  inputSize,
-  scoreThreshold
-});
-const useTinyModel = true;
+export async function getFullFaceDescription(blob, inputSize = 512) {
+  // tiny_face_detector options
+  let scoreThreshold = 0.5;
+  const OPTION = new faceapi.TinyFaceDetectorOptions({
+    inputSize,
+    scoreThreshold
+  });
+  const useTinyModel = true;
 
-export async function getFullFaceDescription(blob) {
   // fetch image to api
   let img = await faceapi.fetchImage(blob);
 
@@ -189,8 +195,6 @@ export async function getFullFaceDescription(blob) {
 Function `createMatcher` accept `faceProfile` from `src/descriptors/bnk48.json` as JSON object to create `labeledDescriptors` of all members with their name and Descriptors arrays. The function then return `faceMatcher` with all labeled descriptors and display name. The maximum descriptor distance is set to 0.5 for more precise face recognition. (default is 0.6)
 
 ```javascript
-const maxDescriptorDistance = 0.5;
-
 export async function createMatcher(faceProfile) {
   // Create labeled descriptors of member from profile
   let members = Object.keys(faceProfile);
@@ -210,6 +214,10 @@ export async function createMatcher(faceProfile) {
     maxDescriptorDistance
   );
   return faceMatcher;
+}
+
+export function isFaceDetectionModelLoaded() {
+  return !!faceapi.nets.tinyFaceDetector.params;
 }
 ```
 
